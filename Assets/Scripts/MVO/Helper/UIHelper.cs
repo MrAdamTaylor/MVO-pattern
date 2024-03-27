@@ -1,24 +1,28 @@
 using UnityEngine;
+using UnityEngine.Serialization;
+using Zenject;
 
 namespace MVO
 {
     public class UIHelper : MonoBehaviour
     {
-        [SerializeField] private Money _money;
+        private MoneyStorage _moneyStorage;
         [SerializeField] private long _monneyCurrent;
 
+        [Inject]
+        public void Construct(MoneyStorage moneyStorage)
+        {
+            _moneyStorage = moneyStorage;
+        }
+        
         public void AddMoney()
         {
-            var moneyCurrent = _money.Amount + _monneyCurrent;
-
-            _money.UpdateMoney(moneyCurrent);
+            _moneyStorage.AddMoney(_monneyCurrent);
         }
 
         public void SpendMoney()
         {
-            var moneyCurrent = _money.Amount - _monneyCurrent;
-
-            _money.UpdateMoney(moneyCurrent);
+            _moneyStorage.SpendMoney(_monneyCurrent);
         }
     }
 }
