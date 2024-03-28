@@ -6,9 +6,9 @@ namespace MVO
 {
     public class UIHelper : MonoBehaviour
     {
+        [SerializeField] private long _current;
         private MoneyStorage _moneyStorage;
-        [SerializeField] private long _monneyCurrent;
-
+        
         [Inject]
         public void Construct(MoneyStorage moneyStorage)
         {
@@ -17,12 +17,12 @@ namespace MVO
         
         public void AddMoney()
         {
-            _moneyStorage.AddMoney(_monneyCurrent);
+            _moneyStorage.AddMoney(_current);
         }
 
         public void SpendMoney()
         {
-            _moneyStorage.SpendMoney(_monneyCurrent);
+            _moneyStorage.SpendMoney(_current);
         }
     }
 }

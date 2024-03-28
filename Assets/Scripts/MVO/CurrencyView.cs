@@ -1,45 +1,17 @@
-using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace MVO
 {
-    public class СurrencyView : MonoBehaviour
+    public class CurrencyView : MonoBehaviour
     {
-
         [SerializeField] private TMP_Text _text;
         [SerializeField] private ScaleTweenParams _startScale;
         [SerializeField] private ScaleTweenParams _endScale;
         [SerializeField] private float _duration;
         private Sequence _sequence;
         private long _currentMoney;
-
-        private MoneyStorage _moneyStorage;
-
-
-        [Inject]
-        public void Construct(MoneyStorage moneyStorage)
-        {
-            _moneyStorage = moneyStorage;
-        }
-
-        public void UpdateMoney(long moneyCurrent)
-        {
-            AnimationText(_currentMoney, moneyCurrent);
-           _currentMoney = moneyCurrent;
-        }
-
-        private void OnEnable()
-        {
-            _moneyStorage.OnMoneyChanged += UpdateMoney;
-        }
-
-        private void OnDisable()
-        {
-            _moneyStorage.OnMoneyChanged -= UpdateMoney;
-        }
 
         private void AnimationText(long moneyCurrent, long moneyNext)
         {
@@ -60,6 +32,12 @@ namespace MVO
         {
             _sequence?.Kill();
             _sequence = null;
+        }
+
+        public void UpdateCurrency(long money)
+        {
+            AnimationText(_currentMoney, money);
+            _currentMoney = money;
         }
     }
 }

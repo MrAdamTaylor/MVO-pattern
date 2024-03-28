@@ -12,10 +12,14 @@ namespace DefaultNamespace
 
         private void MoneyBind()
         {
-            Container.Bind<MoneyStorage>().
-                AsSingle().
-                WithArguments(10L).
-                NonLazy();
+            Container
+                .Bind<MoneyStorage>()
+                .AsSingle()
+                .WithArguments(10L)
+                .NonLazy();
+
+            var view = FindObjectOfType<CurrencyView>();
+            Container.BindInterfacesTo<MoneyPanelAdapter>().AsSingle().WithArguments(view).NonLazy();
         }
     }
 }
