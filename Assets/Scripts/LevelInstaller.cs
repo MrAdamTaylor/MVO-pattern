@@ -1,4 +1,5 @@
-﻿using MVO;
+﻿using System.Dynamic;
+using MVO;
 using Zenject;
 
 namespace DefaultNamespace
@@ -7,10 +8,12 @@ namespace DefaultNamespace
     {
         public override void InstallBindings()
         {
-            MoneyBind();
+            var view = FindObjectOfType<CurrencyProvider>();
+            MoneyBind(view.MoneyView);
+            GemBind(view.GemView);
         }
 
-        private void MoneyBind()
+        private void MoneyBind(CurrencyView viewMoneyView)
         {
             Container
                 .Bind<MoneyStorage>()
@@ -18,8 +21,18 @@ namespace DefaultNamespace
                 .WithArguments(10L)
                 .NonLazy();
 
-            var view = FindObjectOfType<CurrencyView>();
-            Container.BindInterfacesTo<MoneyPanelAdapter>().AsSingle().WithArguments(view).NonLazy();
+            Container.BindInterfacesTo<MoneyPanelAdapter>().AsSingle().WithArguments(viewMoneyView).NonLazy();
+        }
+
+        private void GemBind(CurrencyView viewGemView)
+        {
+            Container
+                .Bind<GemStorage>()
+                .AsSingle()
+                .WithArguments(10L)
+                .NonLazy();
+
+            Container.BindInterfacesTo<GemAdapterPanel>().AsSingle().WithArguments(viewGemView).NonLazy();
         }
     }
 }

@@ -5,6 +5,7 @@ using IInitializable = Zenject.IInitializable;
 
 namespace MVO
 {
+    //TODO - Presenter
     public sealed class MoneyPanelAdapter : IInitializable, IDisposable
     {
         private readonly CurrencyView _currencyView;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MVO
 {
+    //TODO - View 
     public class CurrencyView : MonoBehaviour
     {
         [SerializeField] private TMP_Text _text;

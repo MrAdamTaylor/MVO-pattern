@@ -21,6 +21,16 @@ namespace MVO
             {
                 helper.SpendMoney();
             }
+            
+            if (GUILayout.Button("Add Gem"))
+            {
+                helper.AddGem();
+            }
+            
+            if (GUILayout.Button("Spend Gem"))
+            {
+                helper.SpendGem();
+            }
         }
     }
 }

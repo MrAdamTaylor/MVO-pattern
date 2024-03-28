@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace MVO
 {
+    //TODO - Model
     public sealed class MoneyStorage
     {
         public event Action<long> OnMoneyChanged;
@@ -16,14 +17,12 @@ namespace MVO
 
         public void AddMoney(long money)
         {
-            Debug.Log("AddMoneyEvent");
             Money += money;
             OnMoneyChanged?.Invoke(Money);
         }
 
         public void SpendMoney(long money)
         {
-            Debug.Log("AddMoneyEvent");
             Money -= money;
             OnMoneyChanged?.Invoke(Money);
         }
