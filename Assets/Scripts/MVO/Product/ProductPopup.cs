@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,5 +18,15 @@ public class ProductPopup : MonoBehaviour
 
     [SerializeField] 
     private Button _closeButton;
-    //[SerializeField] private BuyButton _closeButton;
+
+
+    public void Show(object args)
+    {
+        gameObject.SetActive(true);
+    }
+    
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 }
