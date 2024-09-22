@@ -19,7 +19,12 @@ public class ProductHelper : MonoBehaviour
     
     public void BuyProduct()
     {
-        _productBuyer.Buy(_productInfo);
+        //_productBuyer.Buy(_productInfo);
         //throw new Exception("Buy logic button don't release");
+    }
+
+    public void ShowProductPopup()
+    {
+        _productPopup.Show(_productInfo);
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BuyButton : MonoBehaviour
@@ -23,4 +25,19 @@ public class BuyButton : MonoBehaviour
     private Image _priceIcon;
 
     public Button Button => _button;
+
+    public void AddListener(UnityAction action)
+    {
+        Button.onClick.AddListener(action);
+    }
+
+    public void RemoveListener(UnityAction action)
+    {
+        Button.onClick.RemoveListener(action);
+    }
+
+    public void SetPrice(string price)
+    {
+        _priceText.text = price;
+    }
 }

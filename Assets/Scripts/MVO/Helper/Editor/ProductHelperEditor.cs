@@ -16,5 +16,10 @@ public class ProductHelperEditor : Editor
         {
             lessonHelper.BuyProduct();
         }
+
+        if (GUILayout.Button("Show Popup Product"))
+        {
+            lessonHelper.ShowProductPopup();
+        }
     }
 }
