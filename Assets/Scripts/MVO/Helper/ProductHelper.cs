@@ -27,4 +27,9 @@ public class ProductHelper : MonoBehaviour
     {
         _productPopup.Show(_productInfo);
     }
+
+    public void HideProductPopup()
+    {
+        _productPopup.Hide();
+    }
 }

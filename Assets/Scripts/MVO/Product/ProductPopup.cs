@@ -5,6 +5,7 @@ using MVO.Product;
 using StaticData;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Zenject;
 
@@ -41,7 +42,23 @@ public class ProductPopup : MonoBehaviour
 
         _byuButton.SetPrice(productInfo.MoneyPrice.ToString());
         _byuButton.AddListener(BuyProduct);
+        _moneyStorage.OnMoneyChanged += OnMoneyChanged;
+        _closeButton.onClick.AddListener(Hide);
         gameObject.SetActive(true);
+        UpdateButton();
+    }
+
+    private void OnMoneyChanged(long _)
+    {
+        UpdateButton();
+    }
+
+    private void UpdateButton()
+    {
+        var buttonState = _productBuyer.CanBuy(_productInfo) 
+            ? BuyButtonState.Available 
+            : BuyButtonState.Locked;
+        _byuButton.SetState(buttonState);
     }
 
     private void BuyProduct()
@@ -56,5 +73,7 @@ public class ProductPopup : MonoBehaviour
     {
         gameObject.SetActive(false);
         _byuButton.RemoveListener(BuyProduct);
+        _closeButton.onClick.RemoveListener(Hide);
+        _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
     }
 }

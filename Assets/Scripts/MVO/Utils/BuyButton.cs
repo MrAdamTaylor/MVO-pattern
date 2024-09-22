@@ -40,4 +40,23 @@ public class BuyButton : MonoBehaviour
     {
         _priceText.text = price;
     }
+
+    public void SetState(BuyButtonState state)
+    {
+        _state = state;
+
+        switch (state)
+        {
+            case BuyButtonState.Available:
+                Button.interactable = true;
+                _buttonBackground.sprite = _availableButtonSprite;
+                break;
+            case BuyButtonState.Locked:
+                Button.interactable = false;
+                _buttonBackground.sprite = _lockedButtonSprite;
+                break;
+            default:
+                throw new Exception($"Undefined button state {state}!");
+        }
+    }
 }

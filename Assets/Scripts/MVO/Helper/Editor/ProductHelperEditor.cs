@@ -21,5 +21,10 @@ public class ProductHelperEditor : Editor
         {
             lessonHelper.ShowProductPopup();
         }
+        
+        if (GUILayout.Button("Hide Popup Product"))
+        {
+            lessonHelper.HideProductPopup();
+        }
     }
 }
