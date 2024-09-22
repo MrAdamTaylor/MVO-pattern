@@ -1,5 +1,6 @@
 ﻿using System.Dynamic;
 using MVO;
+using MVO.Product;
 using Zenject;
 
 namespace DefaultNamespace
@@ -8,31 +9,10 @@ namespace DefaultNamespace
     {
         public override void InstallBindings()
         {
-            var view = FindObjectOfType<CurrencyProvider>();
-            MoneyBind(view.MoneyView);
-            GemBind(view.GemView);
+            new CurrencyInstaller(Container);
+            new ProductInstaller(Container);
         }
 
-        private void MoneyBind(CurrencyView viewMoneyView)
-        {
-            Container
-                .Bind<MoneyStorage>()
-                .AsSingle()
-                .WithArguments(10L)
-                .NonLazy();
-
-            Container.BindInterfacesTo<MoneyPanelAdapter>().AsSingle().WithArguments(viewMoneyView).NonLazy();
-        }
-
-        private void GemBind(CurrencyView viewGemView)
-        {
-            Container
-                .Bind<GemStorage>()
-                .AsSingle()
-                .WithArguments(10L)
-                .NonLazy();
-
-            Container.BindInterfacesTo<GemAdapterPanel>().AsSingle().WithArguments(viewGemView).NonLazy();
-        }
+        
     }
 }
