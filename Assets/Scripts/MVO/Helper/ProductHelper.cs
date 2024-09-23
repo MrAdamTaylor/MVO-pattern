@@ -1,3 +1,4 @@
+using MVO;
 using MVO.Product;
 using StaticData;
 using UnityEngine;
@@ -10,22 +11,24 @@ public class ProductHelper : MonoBehaviour
     [SerializeField] private ProductCatalog _productCatalog;
     [SerializeField] private ShopPopup _shopPopup;
     private ProductBuyer _productBuyer;
+    private MoneyStorage _moneyStorage;
     
     [Inject]
-    private void Construct(ProductBuyer productBuyer)
+    private void Construct(ProductBuyer productBuyer, MoneyStorage moneyStorage)
     {
+        _moneyStorage = moneyStorage;
         _productBuyer = productBuyer;
     }
     
     public void BuyProduct()
     {
         //_productBuyer.Buy(_productInfo);
-        //throw new Exception("Buy logic button don't release");
     }
 
     public void ShowProductPopup()
     {
-        _productPopup.Show(_productInfo);
+        var productPresenter = new ProductPresenter(_productInfo, _productBuyer, _moneyStorage);
+        _productPopup.Show(productPresenter);
     }
 
     public void HideProductPopup()

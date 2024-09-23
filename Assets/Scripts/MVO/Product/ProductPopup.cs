@@ -1,13 +1,12 @@
-using System;
 using System.IO;
 using MVO;
 using MVO.Product;
 using StaticData;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using Zenject;
+
 
 public class ProductPopup : MonoBehaviour
 {
@@ -16,46 +15,32 @@ public class ProductPopup : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private BuyButton _byuButton;
     [SerializeField] private Button _closeButton;
-    private ProductInfo _productInfo;
-    private ProductBuyer _productBuyer;
-    private MoneyStorage _moneyStorage;
 
-    [Inject]
-    private void Construct(ProductBuyer productBuyer, MoneyStorage moneyStorage)
-    {
-        _moneyStorage = moneyStorage;
-        _productBuyer = productBuyer;
-    }
+    private IProductPresenter _productPresenter;
     
-    public void Show(object args)
+    public void Show(IPresenter presenter)
     {
-        if (args is not ProductInfo productInfo)
+        if (presenter is not IProductPresenter productPresenter)
         {
-            throw new InvalidDataException($"Invalid data type: {args.GetType()}");
+            throw new InvalidDataException($"{nameof(productPresenter)} must be {nameof(IProductPresenter)}");
         }
 
-        _productInfo = productInfo;
+        _productPresenter = productPresenter;
 
-        _title.text = productInfo.Title;
-        _description.text = productInfo.Description;
-        _icon.sprite = productInfo.Icon;
+        _title.text = _productPresenter.Title;
+        _description.text = _productPresenter.Description;
+        _icon.sprite = _productPresenter.Icon;
 
-        _byuButton.SetPrice(productInfo.MoneyPrice.ToString());
+        _byuButton.SetPrice(_productPresenter.MoneyPrice.ToString());
         _byuButton.AddListener(BuyProduct);
-        _moneyStorage.OnMoneyChanged += OnMoneyChanged;
         _closeButton.onClick.AddListener(Hide);
+        UpdateButton();
         gameObject.SetActive(true);
-        UpdateButton();
-    }
-
-    private void OnMoneyChanged(long _)
-    {
-        UpdateButton();
     }
 
     private void UpdateButton()
     {
-        var buttonState = _productBuyer.CanBuy(_productInfo) 
+        var buttonState = _productPresenter.CanBuy
             ? BuyButtonState.Available 
             : BuyButtonState.Locked;
         _byuButton.SetState(buttonState);
@@ -63,10 +48,8 @@ public class ProductPopup : MonoBehaviour
 
     private void BuyProduct()
     {
-        if (_productBuyer.CanBuy(_productInfo))
-        {
-            _productBuyer.Buy(_productInfo);
-        }
+        _productPresenter.Buy();
+        UpdateButton();
     }
 
     public void Hide()
@@ -74,6 +57,5 @@ public class ProductPopup : MonoBehaviour
         gameObject.SetActive(false);
         _byuButton.RemoveListener(BuyProduct);
         _closeButton.onClick.RemoveListener(Hide);
-        _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
     }
 }
