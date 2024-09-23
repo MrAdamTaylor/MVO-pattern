@@ -34,6 +34,7 @@ public class ProductPopup : MonoBehaviour
         _byuButton.SetPrice(_productPresenter.MoneyPrice.ToString());
         _byuButton.AddListener(BuyProduct);
         _closeButton.onClick.AddListener(Hide);
+        _productPresenter.OnButtonStateChanged += UpdateButton; 
         UpdateButton();
         gameObject.SetActive(true);
     }
@@ -57,5 +58,6 @@ public class ProductPopup : MonoBehaviour
         gameObject.SetActive(false);
         _byuButton.RemoveListener(BuyProduct);
         _closeButton.onClick.RemoveListener(Hide);
+        _productPresenter.OnButtonStateChanged -= UpdateButton;
     }
 }

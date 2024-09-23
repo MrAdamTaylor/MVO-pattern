@@ -2772,7 +2772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31506a0817168949aab120e4a8fa4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _productInfo: {fileID: 11400000, guid: 666d1a63dd8e22b4c83086f3340f5070, type: 2}
+  _productInfo: {fileID: 11400000, guid: 2b432c89f4b7c164a9b69f75d128147b, type: 2}
   _productPopup: {fileID: 1029159646}
   _productCatalog: {fileID: 11400000, guid: cef018dd4b7e2ad48abb46de2ac1e351, type: 2}
   _shopPopup: {fileID: 1163075714}
