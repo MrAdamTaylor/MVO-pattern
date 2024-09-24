@@ -11,11 +11,6 @@ public class ProductHelperEditor : Editor
         base.OnInspectorGUI();
         
         var lessonHelper = (ProductHelper) target;
-        
-        if (GUILayout.Button("BuyProduct"))
-        {
-            lessonHelper.BuyProduct();
-        }
 
         if (GUILayout.Button("Show Popup Product"))
         {

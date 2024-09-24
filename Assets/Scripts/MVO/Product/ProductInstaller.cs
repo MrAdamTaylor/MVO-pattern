@@ -6,6 +6,7 @@ namespace MVO.Product
     {
         public ProductInstaller(DiContainer container)
         {
+            container.Bind<ProductPresenterFactory>().AsSingle().NonLazy();
             container.Bind<ProductBuyer>().AsSingle().NonLazy();
         }
     }

@@ -11,23 +11,17 @@ public class ProductHelper : MonoBehaviour
     [SerializeField] private ProductCatalog _productCatalog;
     [SerializeField] private ShopPopup _shopPopup;
     private ProductBuyer _productBuyer;
-    private MoneyStorage _moneyStorage;
+    private ProductPresenterFactory _productPresenterFactory;
     
     [Inject]
-    private void Construct(ProductBuyer productBuyer, MoneyStorage moneyStorage)
+    private void Construct(ProductBuyer productBuyer, ProductPresenterFactory productPresenterFactory)
     {
-        _moneyStorage = moneyStorage;
         _productBuyer = productBuyer;
-    }
-    
-    public void BuyProduct()
-    {
-        //_productBuyer.Buy(_productInfo);
     }
 
     public void ShowProductPopup()
     {
-        var productPresenter = new ProductPresenter(_productInfo, _productBuyer, _moneyStorage);
+        IProductPresenter productPresenter = _productPresenterFactory.Create(_productInfo);
         _productPopup.Show(productPresenter);
     }
 
