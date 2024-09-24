@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace MVO
 {
@@ -7,6 +8,6 @@ namespace MVO
     public struct ScaleTweenParams
     {
         public Vector3 Scale;
-        public float RillRate;
+        public float Duration;
     }
 }

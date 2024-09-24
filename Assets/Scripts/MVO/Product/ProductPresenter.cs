@@ -3,6 +3,7 @@ using MVO.Product;
 using StaticData;
 using UnityEngine;
 using System;
+using UniRx;
 
 public class ProductPresenter : IProductPresenter
 {
@@ -13,10 +14,12 @@ public class ProductPresenter : IProductPresenter
     public Sprite Icon { get; }
     public object MoneyPrice { get; }
     public bool CanBuy => _productBuyer.CanBuy(_productInfo);
+    public ReactiveCommand BuyCommand { get; } = new ReactiveCommand();
 
     private readonly ProductInfo _productInfo;
     private readonly ProductBuyer _productBuyer;
     private readonly MoneyStorage _moneyStorage;
+    private IDisposable _disposable;
 
     public ProductPresenter(ProductInfo productInfo, ProductBuyer productBuyer, MoneyStorage moneyStorage)
     {
@@ -28,9 +31,16 @@ public class ProductPresenter : IProductPresenter
         Description = productInfo.Description;
         Icon = productInfo.Icon;
         MoneyPrice = productInfo.MoneyPrice.ToString();
-        _moneyStorage.OnMoneyChanged += OnMoneyChanged;
+        _disposable = _moneyStorage.Money.Subscribe(OnMoneyChanged);
+        BuyCommand = new ReactiveCommand();
+        BuyCommand.Subscribe(OnBuyCommand);
     }
 
+    public void OnBuyCommand(Unit _)
+    {
+        Buy();
+    }
+    
     private void OnMoneyChanged(long _)
     {
         OnButtonStateChanged?.Invoke();
@@ -46,6 +56,6 @@ public class ProductPresenter : IProductPresenter
 
     ~ProductPresenter()
     {
-        _moneyStorage.OnMoneyChanged -= OnMoneyChanged;
+        _disposable.Dispose();
     }
 }

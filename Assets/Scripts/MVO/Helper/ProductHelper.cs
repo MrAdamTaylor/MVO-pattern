@@ -17,6 +17,7 @@ public class ProductHelper : MonoBehaviour
     private void Construct(ProductBuyer productBuyer, ProductPresenterFactory productPresenterFactory)
     {
         _productBuyer = productBuyer;
+        _productPresenterFactory = productPresenterFactory;
     }
 
     public void ShowProductPopup()

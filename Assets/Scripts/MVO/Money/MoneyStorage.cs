@@ -1,4 +1,5 @@
 using System;
+using UniRx;
 using UnityEngine;
 
 namespace MVO
@@ -6,25 +7,27 @@ namespace MVO
     //TODO - Model
     public sealed class MoneyStorage
     {
-        public event Action<long> OnMoneyChanged;
-        
-        public long Money { get; private set; }
+        public IReadOnlyReactiveProperty<long> Money => _money;
+        private ReactiveProperty<long> _money;
+
+        //public event Action<long> OnMoneyChanged;
+
 
         public MoneyStorage(long money)
         {
-            Money = money;
+            _money = new ReactiveProperty<long>(money);
         }
 
         public void AddMoney(long money)
         {
-            Money += money;
-            OnMoneyChanged?.Invoke(Money);
+            _money.Value += money;
+            //OnMoneyChanged?.Invoke(Money);
         }
 
         public void SpendMoney(long money)
         {
-            Money -= money;
-            OnMoneyChanged?.Invoke(Money);
+            _money.Value -= money;
+            //OnMoneyChanged?.Invoke(Money);
         }
     }
 }

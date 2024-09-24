@@ -1,9 +1,11 @@
 ﻿using System;
+using UniRx;
 using UnityEngine;
 
 public interface IProductPresenter : IPresenter
 {
     public event Action OnButtonStateChanged; 
+    public ReactiveCommand BuyCommand { get; }
     
     string Title { get;}
     string Description { get;}

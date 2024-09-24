@@ -23,7 +23,7 @@ public class GemAdapterPanel : IInitializable, IDisposable
 
     private void UpdateMoney(long money)
     {
-        _currencyView.UpdateCurrency(money);
+        _currencyView.UpdateCurrency(money.ToString());
     }
 
     public void Dispose()

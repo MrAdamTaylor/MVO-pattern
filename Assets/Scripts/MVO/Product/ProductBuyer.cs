@@ -27,7 +27,7 @@ namespace MVO.Product
 
         public bool CanBuy(ProductInfo product)
         {
-            return _moneyStorage.Money >= product.MoneyPrice;
+            return _moneyStorage.Money.Value >= product.MoneyPrice;
         }
     }
 }
